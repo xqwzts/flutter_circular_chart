@@ -11,6 +11,12 @@ Create easily animated pie charts and radial charts by providing them with data 
 
 Check the examples folder for the source code for the above screenshots.
 
+## Contents:
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Details](#details)
+  - [Chart data entries](#chart-data-entries)
+
 
 ## Installation
 
@@ -81,5 +87,18 @@ void _cycleSamples() {
   });
 }
 ```
+
+## Details
+
+### Chart data entries:
+
+Charts expect a list of `CircularStackEntry` objects containing the data they need to be drawn.
+
+Each `CircularStackEntry` corresponds to a complete circle in the chart. For radial charts that is one of the rings, for pie charts it is the whole pie.
+
+Radial charts with multiple `CircularStackEntry`s will display them as concentric circles.
+
+Each `CircularStackEntry` is composed of multiple `CircularSegmentEntry`s containing the value of a data point. In radial charts a segment corresponds to an arc segment of the current ring, for pie charts it is an individual slice.
+
 
 
