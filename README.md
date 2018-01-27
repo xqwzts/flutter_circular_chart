@@ -41,6 +41,8 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 Create chart data entry objects:
 
 ```
+final GlobalKey<AnimatedCircularChartState> _chartKey;
+
 List<CircularStackEntry> data = <CircularStackEntry>[
   new CircularStackEntry(
     <CircularSegmentEntry>[
@@ -53,7 +55,6 @@ List<CircularStackEntry> data = <CircularStackEntry>[
   ),
 ];
 ```
-
 Create an `AnimatedCircularChart`:
 
 ```
@@ -61,7 +62,7 @@ Create an `AnimatedCircularChart`:
 Widget build(BuildContext context) {
   return new AnimatedCircularChart(
     key: _chartKey,
-    size: const Size(300, 300),
+    size: const Size(300.0, 300.0),
     initialChartData: data,
     chartType: CircularChartType.Pie,
   );
