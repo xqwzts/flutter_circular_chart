@@ -38,11 +38,15 @@ Import the package:
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 ```
 
-Create chart data entry objects:
+Create a [GlobalKey](https://docs.flutter.io/flutter/widgets/GlobalKey-class.html) to be able to access the chart and update its data:
 
 ```
 final GlobalKey<AnimatedCircularChartState> _chartKey;
+```
 
+Create chart data entry objects:
+
+```
 List<CircularStackEntry> data = <CircularStackEntry>[
   new CircularStackEntry(
     <CircularSegmentEntry>[
@@ -55,7 +59,8 @@ List<CircularStackEntry> data = <CircularStackEntry>[
   ),
 ];
 ```
-Create an `AnimatedCircularChart`:
+
+Create an `AnimatedCircularChart`, passing it the `_chartKey` and initial `data`:
 
 ```
 @override
