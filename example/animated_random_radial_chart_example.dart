@@ -26,6 +26,7 @@ class _RandomizedRadialChartExampleState
 
   @override
   void initState() {
+    super.initState();
     data = _generateRandomData();
   }
 
