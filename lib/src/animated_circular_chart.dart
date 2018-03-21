@@ -24,8 +24,9 @@ class AnimatedCircularChart extends StatefulWidget {
     this.percentageValues = false,
     this.holeRadius,
     this.startAngle = _kStartAngle,
-  })
-      : assert(size != null),
+    this.holeLabel,
+    this.labelStyle,
+  })  : assert(size != null),
         super(key: key);
 
   /// The size of the bounding box this chart will be constrained to.
@@ -74,6 +75,20 @@ class AnimatedCircularChart extends StatefulWidget {
   /// - 90.0:   6 o'clock
   /// - 180.0:  9 o'clock
   final double startAngle;
+
+  /// A label to show in the hole of a radial chart.
+  ///
+  /// It is used to display the value of a radial slider, and it is displayed
+  /// in the center of the chart's hole.
+  ///
+  /// See also [labelStyle] which is used to render the label.
+  final String holeLabel;
+
+  /// The style used when rendering the [holeLabel].
+  ///
+  /// Defaults to the active [ThemeData]'s
+  /// [ThemeData.textTheme.body2] text style.
+  final TextStyle labelStyle;
 
   /// The state from the closest instance of this class that encloses the given context.
   ///
@@ -126,6 +141,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   AnimationController _animation;
   final Map<String, int> _stackRanks = <String, int>{};
   final Map<String, int> _entryRanks = <String, int>{};
+  final TextPainter _labelPainter = new TextPainter();
 
   @override
   void initState() {
@@ -154,6 +170,21 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   }
 
   @override
+  void didUpdateWidget(AnimatedCircularChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.holeLabel != widget.holeLabel ||
+        oldWidget.labelStyle != widget.labelStyle) {
+      _updateLabelPainter();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateLabelPainter();
+  }
+
+  @override
   void dispose() {
     _animation.dispose();
     super.dispose();
@@ -165,6 +196,20 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
       for (CircularSegmentEntry entry in stackEntry.entries) {
         _entryRanks.putIfAbsent(entry.rankKey, () => _entryRanks.length);
       }
+    }
+  }
+
+  void _updateLabelPainter() {
+    if (widget.holeLabel != null) {
+      TextStyle _labelStyle = widget.labelStyle ?? Theme.of(context).textTheme.body2;
+      _labelPainter
+        ..text = new TextSpan(
+            style: _labelStyle, text: widget.holeLabel)
+        ..textDirection = Directionality.of(context)
+        ..textScaleFactor = MediaQuery.of(context).textScaleFactor
+        ..layout();
+    } else {
+      _labelPainter.text = null;
     }
   }
 
@@ -195,7 +240,10 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   Widget build(BuildContext context) {
     return new CustomPaint(
       size: widget.size,
-      painter: new AnimatedCircularChartPainter(_tween.animate(_animation)),
+      painter: new AnimatedCircularChartPainter(
+        _tween.animate(_animation),
+        _labelPainter,
+      ),
     );
   }
 }
