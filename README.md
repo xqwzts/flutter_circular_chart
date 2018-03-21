@@ -7,7 +7,7 @@ A library for creating animated circular chart widgets with Flutter, inspired by
 Create easily animated pie charts and radial charts by providing them with data objects they can plot into charts and animate between.
 
 ![animated pie chart](screenshots/animated_pie_chart_example.gif)
-![animated radial chart](screenshots/animated_radial_chart_example.gif)
+![animated radial chart](screenshots/animated_radial_chart_example_.gif)
 ![animated_random_radial_chart](screenshots/animated_random_radial_chart_example.gif)
 
 Check the examples folder for the source code for the above screenshots.
