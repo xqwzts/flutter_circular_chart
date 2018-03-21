@@ -243,7 +243,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
       size: widget.size,
       painter: new AnimatedCircularChartPainter(
         _tween.animate(_animation),
-        _labelPainter,
+        widget.holeLabel != null ? _labelPainter : null,
       ),
     );
   }

@@ -14,12 +14,7 @@ class AnimatedCircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    labelPainter.paint(
-        canvas,
-        new Offset(
-          size.width / 2 - labelPainter.width / 2,
-          size.height / 2 - labelPainter.height / 2,
-        ));
+    _paintLabel(canvas, size, labelPainter);
     _paintChart(canvas, size, animation.value);
   }
 
@@ -35,12 +30,7 @@ class CircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    labelPainter.paint(
-        canvas,
-        new Offset(
-          size.width / 2 - labelPainter.width / 2,
-          size.height / 2 - labelPainter.height / 2,
-        ));
+    _paintLabel(canvas, size, labelPainter);
     _paintChart(canvas, size, chart);
   }
 
@@ -49,6 +39,18 @@ class CircularChartPainter extends CustomPainter {
 }
 
 const double _kRadiansPerDegree = Math.pi / 180;
+
+void _paintLabel(Canvas canvas, Size size, TextPainter labelPainter) {
+  if (labelPainter != null) {
+    labelPainter.paint(
+      canvas,
+      new Offset(
+        size.width / 2 - labelPainter.width / 2,
+        size.height / 2 - labelPainter.height / 2,
+      ),
+    );
+  }
+}
 
 void _paintChart(Canvas canvas, Size size, CircularChart chart) {
   final Paint segmentPaint = new Paint()
