@@ -20,6 +20,7 @@ class _AnimatedRadialChartExampleState
   final _chartSize = const Size(200.0, 200.0);
 
   double value = 50.0;
+  Color labelColor = Colors.blue[200];
 
   void _increment() {
     setState(() {
@@ -44,6 +45,7 @@ class _AnimatedRadialChartExampleState
     } else if (value < 50) {
       dialColor = Colors.yellow[200];
     }
+    labelColor = dialColor;
 
     List<CircularStackEntry> data = <CircularStackEntry>[
       new CircularStackEntry(
@@ -59,6 +61,8 @@ class _AnimatedRadialChartExampleState
     ];
 
     if (value > 100) {
+      labelColor = Colors.green[200];
+
       data.add(new CircularStackEntry(
         <CircularSegmentEntry>[
           new CircularSegmentEntry(
@@ -76,6 +80,12 @@ class _AnimatedRadialChartExampleState
 
   @override
   Widget build(BuildContext context) {
+    TextStyle _labelStyle = Theme
+        .of(context)
+        .textTheme
+        .title
+        .merge(new TextStyle(color: labelColor));
+
     return new Scaffold(
       appBar: new AppBar(
         title: const Text('Percentage Dial'),
@@ -89,17 +99,27 @@ class _AnimatedRadialChartExampleState
               initialChartData: _generateChartData(value),
               chartType: CircularChartType.Radial,
               percentageValues: true,
+              holeLabel: '$value%',
+              labelStyle: _labelStyle,
             ),
-          ),
-          new Text(
-            '%$value',
-            style: Theme.of(context).textTheme.title,
           ),
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              new RaisedButton(onPressed: _increment, child: const Text('+10')),
-              new RaisedButton(onPressed: _decrement, child: const Text('-10')),
+              new RaisedButton(
+                onPressed: _decrement,
+                child: const Icon(Icons.remove),
+                shape: const CircleBorder(),
+                color: Colors.red[200],
+                textColor: Colors.white,
+              ),
+              new RaisedButton(
+                onPressed: _increment,
+                child: const Icon(Icons.add),
+                shape: const CircleBorder(),
+                color: Colors.blue[200],
+                textColor: Colors.white,
+              ),
             ],
           ),
         ],
