@@ -33,7 +33,7 @@ class CircularChartPainter extends CustomPainter {
   bool shouldRepaint(CircularChartPainter old) => false;
 }
 
-const double _kRadiansPerDegree = Math.PI / 180;
+const double _kRadiansPerDegree = Math.pi / 180;
 
 void _paintChart(Canvas canvas, Size size, CircularChart chart) {
   final Paint segmentPaint = new Paint()
