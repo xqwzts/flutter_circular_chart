@@ -9,7 +9,12 @@ const double _kMaxAngle = 360.0;
 
 class CircularChartStack implements MergeTweenable<CircularChartStack> {
   CircularChartStack(
-      this.rank, this.radius, this.width, this.startAngle, this.segments);
+    this.rank,
+    this.radius,
+    this.width,
+    this.startAngle,
+    this.segments,
+  );
 
   final int rank;
   final double radius;
@@ -30,8 +35,8 @@ class CircularChartStack implements MergeTweenable<CircularChartStack> {
         ? 100.0
         : entries.fold(
             0.0,
-            (double prev, CircularSegmentEntry element) =>
-                prev + element.value);
+            (double prev, CircularSegmentEntry element) => prev + element.value,
+          );
 
     double previousSweepAngle = 0.0;
     List<CircularChartSegment> segments =

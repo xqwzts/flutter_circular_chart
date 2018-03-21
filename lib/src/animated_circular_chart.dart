@@ -26,7 +26,8 @@ class AnimatedCircularChart extends StatefulWidget {
     this.startAngle = _kStartAngle,
     this.holeLabel,
     this.labelStyle,
-  })  : assert(size != null),
+  })
+      : assert(size != null),
         super(key: key);
 
   /// The size of the bounding box this chart will be constrained to.
@@ -201,10 +202,10 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
 
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
-      TextStyle _labelStyle = widget.labelStyle ?? Theme.of(context).textTheme.body2;
+      TextStyle _labelStyle =
+          widget.labelStyle ?? Theme.of(context).textTheme.body2;
       _labelPainter
-        ..text = new TextSpan(
-            style: _labelStyle, text: widget.holeLabel)
+        ..text = new TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
         ..textScaleFactor = MediaQuery.of(context).textScaleFactor
         ..layout();

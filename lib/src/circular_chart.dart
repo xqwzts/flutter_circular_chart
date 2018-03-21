@@ -11,12 +11,12 @@ class CircularChart {
 
   CircularChart(this.stacks, this.chartType);
 
+  final List<CircularChartStack> stacks;
+  final CircularChartType chartType;
+
   factory CircularChart.empty({@required CircularChartType chartType}) {
     return new CircularChart(<CircularChartStack>[], chartType);
   }
-
-  final List<CircularChartStack> stacks;
-  final CircularChartType chartType;
 
   factory CircularChart.fromData({
     @required Size size,
@@ -60,6 +60,8 @@ class CircularChartTween extends Tween<CircularChart> {
   final MergeTween<CircularChartStack> _stacksTween;
 
   @override
-  CircularChart lerp(double t) =>
-      new CircularChart(_stacksTween.lerp(t), begin.chartType);
+  CircularChart lerp(double t) => new CircularChart(
+        _stacksTween.lerp(t),
+        begin.chartType,
+      );
 }
