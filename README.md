@@ -129,7 +129,7 @@ new AnimatedCircularChart(
   labelStyle: new TextStyle(
     color: Colors.blueGrey[600],
     fontWeight: FontWeight.bold,
-    fontSize: 24.0
+    fontSize: 24.0,
   ),
 )
 ```
