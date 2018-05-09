@@ -8,15 +8,17 @@ A library for creating animated circular chart widgets with Flutter, inspired by
 
 Create easily animated pie charts and radial charts by providing them with data objects they can plot into charts and animate between.
 
+![animated_random_radial_chart](screenshots/animated_random_radial_chart_example.gif)
+
 ![animated pie chart](screenshots/animated_pie_chart_example.gif)
 ![animated radial chart](screenshots/animated_radial_chart_example_label.gif)
-![animated_random_radial_chart](screenshots/animated_random_radial_chart_example.gif)
 
 Check the examples folder for the source code for the above screenshots.
 
 ## Contents:
 - [Installation](#installation)
 - [Getting Started](#getting-started)
+- [Customization](#customization)
 - [Details](#details)
   - [Chart data entries](#chart-data-entries)
 
@@ -88,6 +90,95 @@ void _cycleSamples() {
   });
 }
 ```
+
+## Customization
+
+### Hole Label:
+
+| Property   | Default                           |
+|------------|:---------------------------------:|
+| holeLabel  | null                              |
+| labelStyle | Theme.of(context).textTheme.body2 |
+
+Example:
+
+```dart
+new AnimatedCircularChart(
+  key: _chartKey,
+  size: _chartSize,
+  initialChartData: <CircularStackEntry>[
+    new CircularStackEntry(
+      <CircularSegmentEntry>[
+        new CircularSegmentEntry(
+          33.33,
+          Colors.blue[400],
+          rankKey: 'completed',
+        ),
+        new CircularSegmentEntry(
+          66.67,
+          Colors.blueGrey[600],
+          rankKey: 'remaining',
+        ),
+      ],
+      rankKey: 'progress',
+    ),
+  ],
+  chartType: CircularChartType.Radial,
+  percentageValues: true,
+  holeLabel: '1/3',
+  labelStyle: new TextStyle(
+    color: Colors.blueGrey[600],
+    fontWeight: FontWeight.bold,
+    fontSize: 24.0
+  ),
+)
+```
+
+![hole label example screenshot](screenshots/hole_label_example.png)
+
+---
+
+### Segment Edge Style:
+
+| Property   | Default               |
+|------------|:---------------------:|
+| edgeStyle  | SegmentEdgeStyle.flat |
+
+| SegmentEdgeStyle | Description                                |
+|:----------------:|--------------------------------------------|
+| flat (default)   | Segments begin and end with a flat edge.   |
+| round            | Segments begin and end with a semi-circle. |
+
+Example:
+
+```dart
+new AnimatedCircularChart(
+  key: _chartKey,
+  size: _chartSize,
+  initialChartData: <CircularStackEntry>[
+    new CircularStackEntry(
+      <CircularSegmentEntry>[
+        new CircularSegmentEntry(
+          33.33,
+          Colors.blue[400],
+          rankKey: 'completed',
+        ),
+        new CircularSegmentEntry(
+          66.67,
+          Colors.blueGrey[600],
+          rankKey: 'remaining',
+        ),
+      ],
+      rankKey: 'progress',
+    ),
+  ],
+  chartType: CircularChartType.Radial,
+  edgeStyle: SegmentEdgeStyle.round,
+  percentageValues: true,
+)
+```
+
+![round segment edge example screenshot](screenshots/segment_edge_round_example.png)
 
 ## Details
 
