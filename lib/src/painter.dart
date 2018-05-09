@@ -56,12 +56,16 @@ void _paintChart(Canvas canvas, Size size, CircularChart chart) {
   final Paint segmentPaint = new Paint()
     ..style = chart.chartType == CircularChartType.Radial
         ? PaintingStyle.stroke
-        : PaintingStyle.fill;
+        : PaintingStyle.fill
+    ..strokeCap = chart.edgeStyle == SegmentEdgeStyle.Round
+        ? StrokeCap.round
+        : StrokeCap.butt;
 
   for (final CircularChartStack stack in chart.stacks) {
     for (final segment in stack.segments) {
       segmentPaint.color = segment.color;
       segmentPaint.strokeWidth = stack.width;
+
       canvas.drawArc(
         new Rect.fromCircle(
           center: new Offset(size.width / 2, size.height / 2),
