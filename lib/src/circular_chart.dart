@@ -12,7 +12,7 @@ class CircularChart {
   CircularChart(
     this.stacks,
     this.chartType, {
-    this.edgeStyle = SegmentEdgeStyle.Flat,
+    this.edgeStyle = SegmentEdgeStyle.flat,
   });
 
   final List<CircularChartStack> stacks;
