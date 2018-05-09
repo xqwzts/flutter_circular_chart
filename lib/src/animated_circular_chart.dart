@@ -14,6 +14,15 @@ enum CircularChartType {
   Radial,
 }
 
+/// Determines how the ends of a chart's segments should be drawn.
+enum SegmentEdgeStyle {
+  /// Segments begin and end with a flat edge.
+  Flat,
+
+  /// Segments begin and end with a semi-circle.
+  Round,
+}
+
 class AnimatedCircularChart extends StatefulWidget {
   AnimatedCircularChart({
     Key key,
@@ -26,8 +35,8 @@ class AnimatedCircularChart extends StatefulWidget {
     this.startAngle = _kStartAngle,
     this.holeLabel,
     this.labelStyle,
-  })
-      : assert(size != null),
+    this.edgeStyle = SegmentEdgeStyle.Flat,
+  })  : assert(size != null),
         super(key: key);
 
   /// The size of the bounding box this chart will be constrained to.
@@ -90,6 +99,11 @@ class AnimatedCircularChart extends StatefulWidget {
   /// Defaults to the active [ThemeData]'s
   /// [ThemeData.textTheme.body2] text style.
   final TextStyle labelStyle;
+
+  /// The type of segment edges to be drawn.
+  ///
+  /// Defaults to [SegmentEdgeStyle.Flat].
+  final SegmentEdgeStyle edgeStyle;
 
   /// The state from the closest instance of this class that encloses the given context.
   ///
@@ -165,6 +179,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
         percentageValues: widget.percentageValues,
         holeRadius: widget.holeRadius,
         startAngle: widget.startAngle,
+        edgeStyle: widget.edgeStyle,
       ),
     );
     _animation.forward();
@@ -231,6 +246,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
           percentageValues: widget.percentageValues,
           holeRadius: widget.holeRadius,
           startAngle: widget.startAngle,
+          edgeStyle: widget.edgeStyle,
         ),
       );
       _animation.forward(from: 0.0);

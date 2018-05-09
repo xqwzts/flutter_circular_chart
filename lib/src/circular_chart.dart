@@ -9,10 +9,15 @@ import 'package:flutter_circular_chart/src/tween.dart';
 class CircularChart {
   static const double _kStackWidthFraction = 0.75;
 
-  CircularChart(this.stacks, this.chartType);
+  CircularChart(
+    this.stacks,
+    this.chartType, {
+    this.edgeStyle = SegmentEdgeStyle.Flat,
+  });
 
   final List<CircularChartStack> stacks;
   final CircularChartType chartType;
+  final SegmentEdgeStyle edgeStyle;
 
   factory CircularChart.empty({@required CircularChartType chartType}) {
     return new CircularChart(<CircularChartStack>[], chartType);
@@ -27,6 +32,7 @@ class CircularChart {
     Map<String, int> stackRanks,
     Map<String, int> entryRanks,
     double holeRadius,
+    SegmentEdgeStyle edgeStyle,
   }) {
     final double _holeRadius = holeRadius ?? size.width / (2 + data.length);
     final double stackDistance =
@@ -47,7 +53,7 @@ class CircularChart {
           ),
     );
 
-    return new CircularChart(stacks, chartType);
+    return new CircularChart(stacks, chartType, edgeStyle: edgeStyle);
   }
 }
 
@@ -63,5 +69,6 @@ class CircularChartTween extends Tween<CircularChart> {
   CircularChart lerp(double t) => new CircularChart(
         _stacksTween.lerp(t),
         begin.chartType,
+        edgeStyle: end.edgeStyle,
       );
 }
