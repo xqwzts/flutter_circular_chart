@@ -98,6 +98,7 @@ class _AnimatedRadialChartExampleState
               size: _chartSize,
               initialChartData: _generateChartData(value),
               chartType: CircularChartType.Radial,
+              edgeStyle: SegmentEdgeStyle.Round,
               percentageValues: true,
               holeLabel: '$value%',
               labelStyle: _labelStyle,
