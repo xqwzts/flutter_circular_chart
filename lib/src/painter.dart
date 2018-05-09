@@ -57,7 +57,7 @@ void _paintChart(Canvas canvas, Size size, CircularChart chart) {
     ..style = chart.chartType == CircularChartType.Radial
         ? PaintingStyle.stroke
         : PaintingStyle.fill
-    ..strokeCap = chart.edgeStyle == SegmentEdgeStyle.Round
+    ..strokeCap = chart.edgeStyle == SegmentEdgeStyle.round
         ? StrokeCap.round
         : StrokeCap.butt;
 

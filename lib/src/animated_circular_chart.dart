@@ -17,10 +17,10 @@ enum CircularChartType {
 /// Determines how the ends of a chart's segments should be drawn.
 enum SegmentEdgeStyle {
   /// Segments begin and end with a flat edge.
-  Flat,
+  flat,
 
   /// Segments begin and end with a semi-circle.
-  Round,
+  round,
 }
 
 class AnimatedCircularChart extends StatefulWidget {
@@ -35,7 +35,7 @@ class AnimatedCircularChart extends StatefulWidget {
     this.startAngle = _kStartAngle,
     this.holeLabel,
     this.labelStyle,
-    this.edgeStyle = SegmentEdgeStyle.Flat,
+    this.edgeStyle = SegmentEdgeStyle.flat,
   })  : assert(size != null),
         super(key: key);
 
@@ -102,7 +102,7 @@ class AnimatedCircularChart extends StatefulWidget {
 
   /// The type of segment edges to be drawn.
   ///
-  /// Defaults to [SegmentEdgeStyle.Flat].
+  /// Defaults to [SegmentEdgeStyle.flat].
   final SegmentEdgeStyle edgeStyle;
 
   /// The state from the closest instance of this class that encloses the given context.
