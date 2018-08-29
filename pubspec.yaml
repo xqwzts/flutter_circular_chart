@@ -1,6 +1,6 @@
 name: flutter_circular_chart
 description: Animated radial and pie charts for Flutter
-version: 0.0.3
+version: 0.1.0
 author: Victor Choueiri <victor.oc@gmail.com>
 homepage: https://github.com/xqwzts/flutter_circular_chart
 
@@ -9,7 +9,8 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  test: ^0.12.0
+  flutter_test:
+    sdk: flutter
 
 environment:
-  sdk: '>=1.19.0 <2.0.0'
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"

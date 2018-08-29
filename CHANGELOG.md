@@ -1,3 +1,7 @@
+## [0.1.0] - 2018-08-30
+
+* **Breaking change**. Adjusted Flutter SDK constraint to match beta (0.6.0).
+
 ## [0.0.3] - 2018-05-09
 
 * Added `edgeStyle` property and `SegmentEdgeStyle` enum used to determine the
