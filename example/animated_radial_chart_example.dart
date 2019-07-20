@@ -54,6 +54,7 @@ class _AnimatedRadialChartExampleState
             value,
             dialColor,
             rankKey: 'percentage',
+            strokeWidth: 5
           )
         ],
         rankKey: 'percentage',
