@@ -45,7 +45,7 @@ class CircularChartStack implements MergeTweenable<CircularChartStack> {
           (entries[i].value / valueSum * _kMaxAngle) + previousSweepAngle;
       previousSweepAngle = sweepAngle;
       int rank = entryRanks[entries[i].rankKey] ?? i;
-      return new CircularChartSegment(rank, sweepAngle, entries[i].color);
+      return new CircularChartSegment(rank, sweepAngle, entries[i].color, entries[i].strokeWidth);
     });
 
     return new CircularChartStack(
