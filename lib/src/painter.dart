@@ -14,8 +14,8 @@ class AnimatedCircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintLabel(canvas, size, labelPainter);
     _paintChart(canvas, size, animation.value);
+    _paintLabel(canvas, size, labelPainter);
   }
 
   @override
@@ -30,8 +30,8 @@ class CircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintLabel(canvas, size, labelPainter);
     _paintChart(canvas, size, chart);
+    _paintLabel(canvas, size, labelPainter);
   }
 
   @override
