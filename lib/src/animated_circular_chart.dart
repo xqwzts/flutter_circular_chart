@@ -8,6 +8,12 @@ import 'package:flutter_circular_chart/src/painter.dart';
 const Duration _kDuration = const Duration(milliseconds: 300);
 // The default angle the chart is oriented at.
 const double _kStartAngle = -90.0;
+// The default lower bound
+const double _lowerBound = 0;
+// The default animation curve
+const Curve _animationCurve = Curves.linear;
+// The default direction: forwards
+const bool _reverse = false;
 
 enum CircularChartType {
   Pie,
@@ -36,6 +42,9 @@ class AnimatedCircularChart extends StatefulWidget {
     this.holeLabel,
     this.labelStyle,
     this.edgeStyle = SegmentEdgeStyle.flat,
+    this.lowerBound = _lowerBound,
+    this.animationCurve = _animationCurve,
+    this.reverse = _reverse,
   })  : assert(size != null),
         super(key: key);
 
@@ -105,6 +114,21 @@ class AnimatedCircularChart extends StatefulWidget {
   /// Defaults to [SegmentEdgeStyle.flat].
   final SegmentEdgeStyle edgeStyle;
 
+  /// Determines where the animations should stop
+  /// - 0.0:    0%
+  /// - 0.25:   25%
+  /// - 0.5:    50%
+  /// - 1.0:    100%
+  final double lowerBound;
+
+  /// Curve of the animation. More here: https://api.flutter.dev/flutter/animation/Curves-class.html
+  final Curve animationCurve;
+
+  /// Determines whether it shall go forward or backwards
+  /// - true:   backwards
+  /// - false (default): forward
+  final bool reverse;
+
   /// The state from the closest instance of this class that encloses the given context.
   ///
   /// This method is typically used by [AnimatedCircularChart] item widgets that insert or
@@ -113,13 +137,12 @@ class AnimatedCircularChart extends StatefulWidget {
   /// ```dart
   /// AnimatedCircularChartState animatedCircularChart = AnimatedCircularChart.of(context);
   /// ```
-  static AnimatedCircularChartState of(BuildContext context,
-      {bool nullOk: false}) {
+  static AnimatedCircularChartState of(BuildContext context, {bool nullOk: false}) {
     assert(context != null);
     assert(nullOk != null);
 
-    final AnimatedCircularChartState result = context
-        .ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
+    final AnimatedCircularChartState result =
+        context.ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
 
     if (nullOk || result != null) return result;
 
@@ -150,8 +173,7 @@ class AnimatedCircularChart extends StatefulWidget {
 /// ...
 /// chartKey.currentState.updateData(newData);
 /// ```
-class AnimatedCircularChartState extends State<AnimatedCircularChart>
-    with TickerProviderStateMixin {
+class AnimatedCircularChartState extends State<AnimatedCircularChart> with TickerProviderStateMixin {
   CircularChartTween _tween;
   AnimationController _animation;
   final Map<String, int> _stackRanks = <String, int>{};
@@ -182,14 +204,15 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
         edgeStyle: widget.edgeStyle,
       ),
     );
-    _animation.forward();
+
+    (widget.reverse) ? _animation.forward(from: widget.startAngle) : _animation.forward();
+    _animation.animateTo(widget.lowerBound, curve: widget.animationCurve);
   }
 
   @override
   void didUpdateWidget(AnimatedCircularChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.holeLabel != widget.holeLabel ||
-        oldWidget.labelStyle != widget.labelStyle) {
+    if (oldWidget.holeLabel != widget.holeLabel || oldWidget.labelStyle != widget.labelStyle) {
       _updateLabelPainter();
     }
   }
@@ -217,8 +240,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
 
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
-      TextStyle _labelStyle =
-          widget.labelStyle ?? Theme.of(context).textTheme.body2;
+      TextStyle _labelStyle = widget.labelStyle ?? Theme.of(context).textTheme.body2;
       _labelPainter
         ..text = new TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
