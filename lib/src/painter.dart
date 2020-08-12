@@ -14,8 +14,7 @@ class AnimatedCircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintLabel(canvas, size, labelPainter);
-    _paintChart(canvas, size, animation.value);
+    _paintChart(canvas, size, animation.value, labelPainter);
   }
 
   @override
@@ -30,8 +29,8 @@ class CircularChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintLabel(canvas, size, labelPainter);
-    _paintChart(canvas, size, chart);
+    _paintChart(canvas, size, chart, labelPainter);
+//    _paintLabel(canvas, size, labelPainter);
   }
 
   @override
@@ -52,7 +51,8 @@ void _paintLabel(Canvas canvas, Size size, TextPainter labelPainter) {
   }
 }
 
-void _paintChart(Canvas canvas, Size size, CircularChart chart) {
+void _paintChart(
+    Canvas canvas, Size size, CircularChart chart, TextPainter labelPainter) {
   final Paint segmentPaint = new Paint()
     ..style = chart.chartType == CircularChartType.Radial
         ? PaintingStyle.stroke
@@ -60,7 +60,6 @@ void _paintChart(Canvas canvas, Size size, CircularChart chart) {
     ..strokeCap = chart.edgeStyle == SegmentEdgeStyle.round
         ? StrokeCap.round
         : StrokeCap.butt;
-
   for (final CircularChartStack stack in chart.stacks) {
     for (final segment in stack.segments) {
       segmentPaint.color = segment.color;
@@ -75,6 +74,12 @@ void _paintChart(Canvas canvas, Size size, CircularChart chart) {
         segment.sweepAngle * _kRadiansPerDegree,
         chart.chartType == CircularChartType.Pie,
         segmentPaint,
+      );
+
+      labelPainter.text = new TextSpan(text: segment.rank.toString());
+      labelPainter.paint(
+        canvas,
+        new Offset(size.width / 2, size.height / 2),
       );
     }
   }
