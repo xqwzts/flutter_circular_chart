@@ -9,13 +9,13 @@ class AnimatedCircularChartPainter extends CustomPainter {
   AnimatedCircularChartPainter(this.animation, this.labelPainter)
       : super(repaint: animation);
 
-  final Animation<CircularChart> animation;
-  final TextPainter labelPainter;
+  final Animation<CircularChart>? animation;
+  final TextPainter? labelPainter;
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintLabel(canvas, size, labelPainter);
-    _paintChart(canvas, size, animation.value);
+    _paintLabel(canvas, size, labelPainter!);
+    _paintChart(canvas, size, animation!.value);
   }
 
   @override
@@ -61,19 +61,19 @@ void _paintChart(Canvas canvas, Size size, CircularChart chart) {
         ? StrokeCap.round
         : StrokeCap.butt;
 
-  for (final CircularChartStack stack in chart.stacks) {
-    for (final segment in stack.segments) {
-      segmentPaint.color = segment.color;
-      segmentPaint.strokeWidth = stack.width;
+  for (final CircularChartStack stack in chart.stacks!) {
+    for (final segment in stack.segments!) {
+      segmentPaint.color = segment.color!;
+      segmentPaint.strokeWidth = stack.width!;
 
       canvas.drawArc(
         new Rect.fromCircle(
           center: new Offset(size.width / 2, size.height / 2),
-          radius: stack.radius,
+          radius: stack.radius!,
         ),
-        stack.startAngle * _kRadiansPerDegree,
-        segment.sweepAngle * _kRadiansPerDegree,
-        chart.chartType == CircularChartType.Pie,
+        stack.startAngle! * _kRadiansPerDegree,
+        segment.sweepAngle! * _kRadiansPerDegree,
+        chart.chartType! == CircularChartType.Pie,
         segmentPaint,
       );
     }

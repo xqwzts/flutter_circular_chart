@@ -16,14 +16,14 @@ class CircularSegmentEntry {
   /// then this segment is drawn in proportion to the total value of all segments
   /// in the stack. Otherwise the value is considered the exact percentage of the
   /// stack that this segment occupies.
-  final double value;
+  final double? value;
 
   /// The color drawn in the stack for this segment.
-  final Color color;
+  final Color? color;
 
   /// An optional String key, used when animating charts to preserve semantics when
   /// transitioning between data points.
-  final String rankKey;
+  final String? rankKey;
 
   String toString() {
     return '$rankKey: $value $color';
@@ -45,5 +45,5 @@ class CircularStackEntry {
 
   /// An optional String key, used when animating charts to preserve semantics when
   /// transitioning between data points.
-  final String rankKey;
+  final String? rankKey;
 }

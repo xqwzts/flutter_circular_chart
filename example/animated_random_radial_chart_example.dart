@@ -22,7 +22,7 @@ class _RandomizedRadialChartExampleState
       new GlobalKey<AnimatedCircularChartState>();
   final _chartSize = const Size(300.0, 300.0);
   final Math.Random random = new Math.Random();
-  List<CircularStackEntry> data;
+  List<CircularStackEntry>? data;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _RandomizedRadialChartExampleState
   void _randomize() {
     setState(() {
       data = _generateRandomData();
-      _chartKey.currentState.updateData(data);
+      _chartKey.currentState!.updateData(data!);
     });
   }
 
@@ -44,7 +44,7 @@ class _RandomizedRadialChartExampleState
     List<CircularStackEntry> data = new List.generate(stackCount, (i) {
       int segCount = random.nextInt(10);
       List<CircularSegmentEntry> segments =  new List.generate(segCount, (j) {
-        Color randomColor = ColorPalette.primary.random(random);
+        Color? randomColor = ColorPalette.primary.random(random);
         return new CircularSegmentEntry(random.nextDouble(), randomColor);
       });
       return new CircularStackEntry(segments);

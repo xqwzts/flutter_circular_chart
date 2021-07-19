@@ -9,22 +9,24 @@ abstract class MergeTweenable<T> {
 }
 
 class MergeTween<T extends MergeTweenable<T>> extends Tween<List<T>> {
-  MergeTween(List<T> begin, List<T> end) : super(begin: begin, end: end) {
-    final bMax = begin.length;
-    final eMax = end.length;
+  MergeTween(List<T>? begin, List<T>? end) : super(begin: begin, end: end) {
+    final bMax = begin?.length ?? 0;
+    final eMax = end?.length ?? 0;
     var b = 0;
     var e = 0;
     while (b + e < bMax + eMax) {
-      if (b < bMax && (e == eMax || begin[b] < end[e])) {
-        _tweens.add(begin[b].tweenTo(begin[b].empty));
+      if (b < bMax && (e == eMax || begin![b] < end![e])) {
+        _tweens.add(begin![b].tweenTo(begin![b].empty));
         b++;
-      } else if (e < eMax && (b == bMax || end[e] < begin[b])) {
-        _tweens.add(end[e].empty.tweenTo(end[e]));
+      } else {
+        if (e < eMax && (b == bMax || end![e] < begin![b])) {
+        _tweens.add(end![e].empty.tweenTo(end![e]));
         e++;
       } else {
-        _tweens.add(begin[b].tweenTo(end[e]));
+        _tweens.add(begin![b].tweenTo(end![e]));
         b++;
         e++;
+      }
       }
     }
   }

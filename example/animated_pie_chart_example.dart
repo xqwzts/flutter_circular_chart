@@ -59,7 +59,7 @@ class _AnimatedPieChartExampleState extends State<AnimatedPieChartExample> {
     setState(() {
       sampleIndex++;
       List<CircularStackEntry> data = _quarterlyProfitPieData[sampleIndex % 3];
-      _chartKey.currentState.updateData(data);
+      _chartKey.currentState!.updateData(data);
     });
   }
 

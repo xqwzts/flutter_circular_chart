@@ -25,9 +25,9 @@ enum SegmentEdgeStyle {
 
 class AnimatedCircularChart extends StatefulWidget {
   AnimatedCircularChart({
-    Key key,
-    @required this.size,
-    @required this.initialChartData,
+    Key? key,
+    required this.size,
+    required this.initialChartData,
     this.chartType = CircularChartType.Radial,
     this.duration = _kDuration,
     this.percentageValues = false,
@@ -40,7 +40,7 @@ class AnimatedCircularChart extends StatefulWidget {
         super(key: key);
 
   /// The size of the bounding box this chart will be constrained to.
-  final Size size;
+  final Size? size;
 
   /// The data used to build the chart displayed when the widget is first placed.
   /// Each [CircularStackEntry] in the list defines an individual stack of data:
@@ -51,16 +51,16 @@ class AnimatedCircularChart extends StatefulWidget {
   /// will be grouped together as concentric circles.
   ///
   /// If [chartType] is [CircularChartType.Pie] then length cannot be > 1.
-  final List<CircularStackEntry> initialChartData;
+  final List<CircularStackEntry>? initialChartData;
 
   /// The type of chart to be rendered.
   /// Use [CircularChartType.Pie] for a circle divided into slices for each entry.
   /// Use [CircularChartType.Radial] for one or more arcs with a hole in the center.
-  final CircularChartType chartType;
+  final CircularChartType? chartType;
 
   /// The duration of the chart animation when [AnimatedCircularChartState.updateData]
   /// is called.
-  final Duration duration;
+  final Duration? duration;
 
   /// If true then the data values provided will determine what percentage of the circle
   /// this segment occupies [i.e: a value of 100 is the full circle].
@@ -69,14 +69,14 @@ class AnimatedCircularChart extends StatefulWidget {
   /// is considered to encompass 100% of the circle.
   ///
   /// defaults to false.
-  final bool percentageValues;
+  final bool? percentageValues;
 
   /// For [CircularChartType.Radial] charts this defines the circle in the center
   /// of the canvas, around which the chart is drawn. If not provided then it will
   /// be automatically calculated to accommodate all the data.
   ///
   /// Has no effect in [CircularChartType.Pie] charts.
-  final double holeRadius;
+  final double? holeRadius;
 
   /// The chart gets drawn and animates clockwise from [startAngle], defaulting to the
   /// top/center point or -90.0. In terms of a clock face these would be:
@@ -84,7 +84,7 @@ class AnimatedCircularChart extends StatefulWidget {
   /// - 0.0:    3 o'clock
   /// - 90.0:   6 o'clock
   /// - 180.0:  9 o'clock
-  final double startAngle;
+  final double? startAngle;
 
   /// A label to show in the hole of a radial chart.
   ///
@@ -92,18 +92,18 @@ class AnimatedCircularChart extends StatefulWidget {
   /// in the center of the chart's hole.
   ///
   /// See also [labelStyle] which is used to render the label.
-  final String holeLabel;
+  final String? holeLabel;
 
   /// The style used when rendering the [holeLabel].
   ///
   /// Defaults to the active [ThemeData]'s
   /// [ThemeData.textTheme.body2] text style.
-  final TextStyle labelStyle;
+  final TextStyle? labelStyle;
 
   /// The type of segment edges to be drawn.
   ///
   /// Defaults to [SegmentEdgeStyle.flat].
-  final SegmentEdgeStyle edgeStyle;
+  final SegmentEdgeStyle? edgeStyle;
 
   /// The state from the closest instance of this class that encloses the given context.
   ///
@@ -113,13 +113,13 @@ class AnimatedCircularChart extends StatefulWidget {
   /// ```dart
   /// AnimatedCircularChartState animatedCircularChart = AnimatedCircularChart.of(context);
   /// ```
-  static AnimatedCircularChartState of(BuildContext context,
+  static AnimatedCircularChartState? of(BuildContext context,
       {bool nullOk: false}) {
     assert(context != null);
     assert(nullOk != null);
 
-    final AnimatedCircularChartState result = context
-        .ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
+    final AnimatedCircularChartState? result = context
+        .findAncestorStateOfType<AnimatedCircularChartState>();
 
     if (nullOk || result != null) return result;
 
@@ -152,8 +152,8 @@ class AnimatedCircularChart extends StatefulWidget {
 /// ```
 class AnimatedCircularChartState extends State<AnimatedCircularChart>
     with TickerProviderStateMixin {
-  CircularChartTween _tween;
-  AnimationController _animation;
+  CircularChartTween? _tween;
+  AnimationController? _animation;
   final Map<String, int> _stackRanks = <String, int>{};
   final Map<String, int> _entryRanks = <String, int>{};
   final TextPainter _labelPainter = new TextPainter();
@@ -166,23 +166,23 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
       vsync: this,
     );
 
-    _assignRanks(widget.initialChartData);
+    _assignRanks(widget.initialChartData!);
 
     _tween = new CircularChartTween(
-      new CircularChart.empty(chartType: widget.chartType),
+      new CircularChart.empty(chartType: widget.chartType!),
       new CircularChart.fromData(
-        size: widget.size,
-        data: widget.initialChartData,
-        chartType: widget.chartType,
+        size: widget.size!,
+        data: widget.initialChartData!,
+        chartType: widget.chartType!,
         stackRanks: _stackRanks,
         entryRanks: _entryRanks,
-        percentageValues: widget.percentageValues,
+        percentageValues: widget.percentageValues!,
         holeRadius: widget.holeRadius,
-        startAngle: widget.startAngle,
+        startAngle: widget.startAngle!,
         edgeStyle: widget.edgeStyle,
       ),
     );
-    _animation.forward();
+    _animation!.forward();
   }
 
   @override
@@ -202,15 +202,15 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
 
   @override
   void dispose() {
-    _animation.dispose();
+    _animation!.dispose();
     super.dispose();
   }
 
   void _assignRanks(List<CircularStackEntry> data) {
     for (CircularStackEntry stackEntry in data) {
-      _stackRanks.putIfAbsent(stackEntry.rankKey, () => _stackRanks.length);
+      _stackRanks.putIfAbsent(stackEntry!.rankKey!, () => _stackRanks.length);
       for (CircularSegmentEntry entry in stackEntry.entries) {
-        _entryRanks.putIfAbsent(entry.rankKey, () => _entryRanks.length);
+        _entryRanks.putIfAbsent(entry.rankKey!, () => _entryRanks.length);
       }
     }
   }
@@ -218,7 +218,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
       TextStyle _labelStyle =
-          widget.labelStyle ?? Theme.of(context).textTheme.body2;
+          widget.labelStyle!;
       _labelPainter
         ..text = new TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
@@ -236,29 +236,29 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
 
     setState(() {
       _tween = new CircularChartTween(
-        _tween.evaluate(_animation),
+        _tween!.evaluate(_animation!),
         new CircularChart.fromData(
-          size: widget.size,
+          size: widget.size!,
           data: data,
-          chartType: widget.chartType,
+          chartType: widget.chartType!,
           stackRanks: _stackRanks,
           entryRanks: _entryRanks,
-          percentageValues: widget.percentageValues,
+          percentageValues: widget.percentageValues!,
           holeRadius: widget.holeRadius,
-          startAngle: widget.startAngle,
+          startAngle: widget.startAngle!,
           edgeStyle: widget.edgeStyle,
         ),
       );
-      _animation.forward(from: 0.0);
+      _animation!.forward(from: 0.0);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return new CustomPaint(
-      size: widget.size,
+      size: widget.size!,
       painter: new AnimatedCircularChartPainter(
-        _tween.animate(_animation),
+        _tween!.animate(_animation!),
         widget.holeLabel != null ? _labelPainter : null,
       ),
     );

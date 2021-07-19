@@ -20,13 +20,13 @@ class _AnimatedRadialChartExampleState
   final _chartSize = const Size(200.0, 200.0);
 
   double value = 50.0;
-  Color labelColor = Colors.blue[200];
+  Color? labelColor = Colors.blue[200];
 
   void _increment() {
     setState(() {
       value += 10;
       List<CircularStackEntry> data = _generateChartData(value);
-      _chartKey.currentState.updateData(data);
+      _chartKey.currentState!.updateData(data);
     });
   }
 
@@ -34,12 +34,12 @@ class _AnimatedRadialChartExampleState
     setState(() {
       value -= 10;
       List<CircularStackEntry> data = _generateChartData(value);
-      _chartKey.currentState.updateData(data);
+      _chartKey.currentState!.updateData(data);
     });
   }
 
   List<CircularStackEntry> _generateChartData(double value) {
-    Color dialColor = Colors.blue[200];
+    Color? dialColor = Colors.blue[200];
     if (value < 0) {
       dialColor = Colors.red[200];
     } else if (value < 50) {
@@ -83,7 +83,7 @@ class _AnimatedRadialChartExampleState
     TextStyle _labelStyle = Theme
         .of(context)
         .textTheme
-        .title
+        .title!
         .merge(new TextStyle(color: labelColor));
 
     return new Scaffold(
