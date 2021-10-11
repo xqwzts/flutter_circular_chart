@@ -119,7 +119,7 @@ class AnimatedCircularChart extends StatefulWidget {
     assert(nullOk != null);
 
     final AnimatedCircularChartState result = context
-        .ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
+        .findAncestorStateOfType<AnimatedCircularChartState>();
 
     if (nullOk || result != null) return result;
 
