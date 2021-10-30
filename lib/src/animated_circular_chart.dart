@@ -119,7 +119,7 @@ class AnimatedCircularChart extends StatefulWidget {
     assert(nullOk != null);
 
     final AnimatedCircularChartState result = context
-        .ancestorStateOfType(const TypeMatcher<AnimatedCircularChartState>());
+        .findAncestorStateOfType<AnimatedCircularChartState>();
 
     if (nullOk || result != null) return result;
 
@@ -218,7 +218,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
       TextStyle _labelStyle =
-          widget.labelStyle ?? Theme.of(context).textTheme.body2;
+          widget.labelStyle ?? Theme.of(context).textTheme.bodyText2;
       _labelPainter
         ..text = new TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
